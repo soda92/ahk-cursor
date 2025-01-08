@@ -1,6 +1,6 @@
 [project]
 name = "ahk-cursor"
-version = "0.1.0"
+version = "2025.1.8.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -26,10 +26,17 @@ exclude = ["test*", "scripts", ".vscode"] # empty by default
 [tool.setuptools.package-data]
 ahk_cursor = ["*.ahk", "*.ico"]
 
+[dependency-groups]
+dev = [
+    "build>=1.2.2.post1",
+    "twine>=6.0.1",
+]
+
 
 [project.scripts]
 ahk-cursor-cli = "ahk_cursor.main:main"
 ahk-cursor-stop-cli = "ahk_cursor.stop:stop"
+ahk-cursor-launcher-cli = "ahk_cursor.launcher:launcher"
 
 [project.gui-scripts]
 ahk-cursor = "ahk_cursor.main:main"

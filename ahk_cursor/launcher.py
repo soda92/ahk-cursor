@@ -1,6 +1,6 @@
-from gen import gen, script, CURRENT
+from ahk_cursor.gen import gen, script
 import os
-from autostart import create
+from ahk_cursor.autostart import create
 
 
 def launcher():
