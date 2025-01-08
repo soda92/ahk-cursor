@@ -43,7 +43,8 @@ def check_running():
     x = ""
     try:
         x = subprocess.run(
-            args=["powershell", "-c", "Get-Process -Name BGI"], check=True
+            args=["powershell", "-c", "Get-Process -Name BGI"],
+            check=True,
         )
     except Exception as e:
         logger.info(e)

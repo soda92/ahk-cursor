@@ -2,6 +2,7 @@ from pathlib import Path
 
 CURRENT = Path(__file__).resolve().parent
 gen_dir = CURRENT.parent.joinpath("ahk_cursor_script")
+script = gen_dir.joinpath("Cursor.ahk")
 
 
 def gen():
@@ -10,4 +11,4 @@ def gen():
     content = CURRENT.joinpath("Cursor.template.ahk").read_text(encoding="utf8")
     content = content.replace("{resources}", str(CURRENT))
 
-    gen_dir.joinpath("Cursur.ahk").write_text(content, encoding="utf8")
+    script.write_text(content, encoding="utf8")

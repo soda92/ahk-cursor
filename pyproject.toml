@@ -7,6 +7,7 @@ requires-python = ">=3.10"
 dependencies = [
     "fastapi>=0.115.6",
     "pyautogui",
+    "pywin32>=308",
     "requests>=2.32.3",
     "uvicorn>=0.34.0",
 ]
@@ -28,6 +29,7 @@ ahk_cursor = ["*.ahk", "*.ico"]
 
 [project.scripts]
 ahk-cursor-cli = "ahk_cursor.main:main"
+ahk-cursor-stop-cli = "ahk_cursor.stop:stop"
 
 [project.gui-scripts]
 ahk-cursor = "ahk_cursor.main:main"
