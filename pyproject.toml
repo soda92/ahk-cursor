@@ -1,0 +1,23 @@
+[project]
+name = "ahk-cursor"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pyautogui",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-data]
+ahk_cursor = ["*.ahk", "*.ico"]
+
+
+[project.scripts]
+ahk-cursor-cli = "ahk_cursor.main:main"
+
+[project.gui-scripts]
+ahk-cursor = "ahk_cursor.main:main"
