@@ -5,12 +5,22 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "fastapi>=0.115.6",
     "pyautogui",
+    "requests>=2.32.3",
+    "uvicorn>=0.34.0",
 ]
 
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+# All the following settings are optional:
+where = ["."]                             # ["."] by default
+include = ["*"]                           # ["*"] by default
+exclude = ["test*", "scripts", ".vscode"] # empty by default
+
 
 [tool.setuptools.package-data]
 ahk_cursor = ["*.ahk", "*.ico"]
