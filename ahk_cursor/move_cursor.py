@@ -49,7 +49,7 @@ def main(queue1: multiprocessing.Queue = None, queue2: multiprocessing.Queue = N
                     break
                 if signal == "force_run":
                     move_cursor()
-        time.sleep(1)
+        time.sleep(0.5)
 
 
 if __name__ == "__main__":
