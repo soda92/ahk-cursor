@@ -7,10 +7,9 @@ import logging.handlers
 from pathlib import Path
 import subprocess
 from multiprocessing import Process
-import queue as q
 import multiprocessing
 import time
-from flask import Flask
+from fastapi import FastAPI
 
 
 # sending checking reuslts
@@ -58,35 +57,42 @@ def check_running_loop(queue: multiprocessing.Queue, queue2: multiprocessing.Que
     while True:
         x = check_running()
         if x == -1:
-            queue.put("running")
-        else:
             queue.put("stopped")
-        time.sleep(1)
+        else:
+            queue.put("running")
+
+        if not queue2.empty():
+            sig = queue2.get()
+            print(sig)
+            if sig == "shutdown":
+                break
+        time.sleep(3)
 
 
-app = Flask(__name__)
 queue4 = multiprocessing.Queue()
 
 
-@app.route("/force_run")
-def hello_world():
-    queue_signals.put("force_run")
+def server(queue_signals, queue4):
+    app = FastAPI()
 
+    @app.get("/force_run")
+    def hello_world():
+        queue_signals.put("force_run")
+        return "111"
 
-@app.route("/shutdown_server")
-def shutdown():
-    queue_signals.put("shutdown")
-    queue4.put("shutdown")
+    @app.get("/shutdown_server")
+    def shutdown():
+        queue_signals.put("shutdown")
+        queue4.put("shutdown")
+        return "222"
 
-
-def server():
     import uvicorn
 
     uvicorn.run(app, port=12345)
 
 
-def server_checker(queue_status, queue_signals):
-    p = Process(target=server)
+def server_checker(queue_status, queue_signals, queue4):
+    p = Process(target=server, args=(queue_signals, queue4))
     p.start()
 
     while True:
@@ -94,6 +100,7 @@ def server_checker(queue_status, queue_signals):
             time.sleep(1)
         else:
             p.terminate()
+            queue_signals.put("shutdown")
             break
 
 
@@ -107,7 +114,7 @@ def main():
         t2 = Process(target=move_cursor, args=[queue_status, queue_signals])
         t2.start()
 
-        t3 = Process(target=server_checker, args=[queue_status, queue_signals])
+        t3 = Process(target=server_checker, args=[queue_status, queue_signals, queue4])
         t3.start()
 
         t = Process(

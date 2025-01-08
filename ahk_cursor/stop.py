@@ -1,11 +1,13 @@
-from pathlib import Path
-import os
-
-CURRENT = Path(__file__).resolve().parent
+import requests
 
 
 def stop():
-    os.startfile(CURRENT.joinpath("stop.ahk"))
+    try:
+        r = requests.get("http://localhost:12345/shutdown_server")
+    except requests.Timeout:
+        print("timeout")
+    else:
+        print(r.content)
 
 
 if __name__ == "__main__":
