@@ -1,0 +1,11 @@
+{
+    "python.languageServer": "Jedi",
+    "[python]": {
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.defaultColorDecorators": "auto",
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "files.associations": {
+        "req_main.txt": "pip-requirements"
+    }
+}
