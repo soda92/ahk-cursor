@@ -67,7 +67,7 @@ def check_running_loop(queue: multiprocessing.Queue, queue2: multiprocessing.Que
             print(sig)
             if sig == "shutdown":
                 break
-        time.sleep(3)
+        time.sleep(1.2)
 
 
 queue4 = multiprocessing.Queue()
@@ -98,7 +98,7 @@ def server_checker(queue_status, queue_signals, queue4):
 
     while True:
         if queue4.empty():
-            time.sleep(1)
+            time.sleep(0.5)
         else:
             p.terminate()
             queue_signals.put("shutdown")
