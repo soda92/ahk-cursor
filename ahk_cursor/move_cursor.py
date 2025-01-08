@@ -2,7 +2,6 @@ import time
 import pyautogui
 from pathlib import Path
 import multiprocessing
-import queue as q
 
 CURRENT = Path(__file__).resolve().parent
 
@@ -22,18 +21,35 @@ def move_cursor():
 CURRENT.joinpath("running").write_text("a", encoding="utf8")
 
 
-def main(queue1: multiprocessing.Queue = None, queue2: multiprocessing.Queue = None):
+def move_cursor_impl():
     while True:
-        if queue1 is not None and queue2 is not None:
-            if not queue1.empty():
-                x = queue1.get_nowait()
-                queue2.put(x)
-                break
-
         try:
             move_cursor()
         except Exception as e:
             print(e)
+
+
+def main(queue1: multiprocessing.Queue = None, queue2: multiprocessing.Queue = None):
+    t = multiprocessing.Process(target=move_cursor_impl)
+    while True:
+        if queue1 is not None and queue2 is not None:
+            if not queue1.empty():
+                x = queue1.get_nowait()
+                if x == "stopped":
+                    if t.is_alive():
+                        t.terminate()
+                elif x == "running":
+                    if not t.is_alive():
+                        t = multiprocessing.Process(target=move_cursor_impl)
+                        t.start()
+
+            if not queue2.empty():
+                signal = queue2.get_nowait()
+                if signal == "shutdown":
+                    break
+                if signal == "force_run":
+                    move_cursor()
+        time.sleep(1)
 
 
 if __name__ == "__main__":

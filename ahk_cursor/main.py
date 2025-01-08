@@ -10,11 +10,13 @@ from multiprocessing import Process
 import queue as q
 import multiprocessing
 import time
+from flask import Flask
 
-# send checking status
-queue = multiprocessing.Queue()
-# receive result
-queue2 = multiprocessing.Queue()
+
+# sending checking reuslts
+queue_status = multiprocessing.Queue()
+# signals
+queue_signals = multiprocessing.Queue()
 
 CURRENT = Path(__file__).resolve().parent
 log_file = CURRENT.parent.joinpath("soda-ahk.cursor.log")
@@ -56,10 +58,43 @@ def check_running_loop(queue: multiprocessing.Queue, queue2: multiprocessing.Que
     while True:
         x = check_running()
         if x == -1:
-            queue.put(1)
-            if not queue2.empty():
-                exit(0)
+            queue.put("running")
+        else:
+            queue.put("stopped")
         time.sleep(1)
+
+
+app = Flask(__name__)
+queue4 = multiprocessing.Queue()
+
+
+@app.route("/force_run")
+def hello_world():
+    queue_signals.put("force_run")
+
+
+@app.route("/shutdown_server")
+def shutdown():
+    queue_signals.put("shutdown")
+    queue4.put("shutdown")
+
+
+def server():
+    import uvicorn
+
+    uvicorn.run(app, port=12345)
+
+
+def server_checker(queue_status, queue_signals):
+    p = Process(target=server)
+    p.start()
+
+    while True:
+        if queue4.empty():
+            time.sleep(1)
+        else:
+            p.terminate()
+            break
 
 
 def main():
@@ -69,14 +104,17 @@ def main():
     if args.stop:
         stop()
     else:
-        t2 = Process(target=move_cursor, args=[queue, queue2])
+        t2 = Process(target=move_cursor, args=[queue_status, queue_signals])
         t2.start()
+
+        t3 = Process(target=server_checker, args=[queue_status, queue_signals])
+        t3.start()
 
         t = Process(
             target=check_running_loop,
             args=(
-                queue,
-                queue2,
+                queue_status,
+                queue_signals,
             ),
         )
         t.start()
