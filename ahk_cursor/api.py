@@ -260,6 +260,26 @@ def ListProcessThreads(ProcessID):
     return True
 
 
+# see also: https://docs.rs/tasklist/latest/src/tasklist/lib.rs.html#77
+def GetProcessByName(name: str):
+    hProcessSnap = c_void_p(0)
+    hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0)
+
+    pe32 = PROCESSENTRY32()
+    pe32.dwSize = sizeof(PROCESSENTRY32)
+    ret = Process32First(hProcessSnap, pointer(pe32))
+    while ret:
+        pass
+        x = pe32.szExeFile
+
+        if x == name:
+            return True
+
+        ret = Process32Next(hProcessSnap, pointer(pe32))
+
+    return False
+
+
 # main
 if __name__ == "__main__":
     hProcessSnap = c_void_p(0)
