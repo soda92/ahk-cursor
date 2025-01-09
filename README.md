@@ -1,6 +1,6 @@
 # ahk-cursor
 
-<a href="https://pypi.org/project/soda-ahk/">
+<a href="https://pypi.org/project/soda-ahk-cursor/">
     <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/soda-ahk-cursor">
 </a>
 

@@ -1,6 +1,6 @@
 [project]
 name = "soda-ahk-cursor"
-version = "2025.1.9.0"
+version = "2025.1.9.1"
 description = "Move cursor randomly."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -11,6 +11,9 @@ dependencies = [
     "requests>=2.32.3",
     "uvicorn>=0.34.0",
 ]
+
+[project.urls]
+Repository = "https://github.com/soda92/ahk-cursor"
 
 [build-system]
 requires = ["setuptools"]
