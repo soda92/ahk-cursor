@@ -1,7 +1,7 @@
 [project]
 name = "soda-ahk-cursor"
-version = "2025.1.8.0"
-description = "Add your description here"
+version = "2025.1.9.0"
+description = "Move cursor randomly."
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
@@ -35,7 +35,7 @@ dev = [
 
 [project.scripts]
 # main cli use
-ahk-cursor = "ahk_cursor.launcher:launcher"
-ahk-cursor-stop = "ahk_cursor.stop:stop"
+soda-ahk-cursor = "ahk_cursor.launcher:launcher"
+soda-ahk-cursor-stop = "ahk_cursor.stop:stop"
 # launched in AHK
-ahk-cursor-launcher = "ahk_cursor.main:main"
+soda-ahk-cursor-launcher = "ahk_cursor.main:main"
