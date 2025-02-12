@@ -12,7 +12,7 @@ ExitPreviousSession(ExitReason, ExitCode) {
 }
 
 ExitPreviousSession(0, 0)
-Run "soda-ahk-cursor-launcher.exe", , "Hide", &id
+Run "ahk-cursor-l.exe", , "Hide", &id
 
 Persistent
 OnExit ExitPreviousSession
