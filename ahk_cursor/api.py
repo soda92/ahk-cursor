@@ -68,6 +68,9 @@ Process32NextW.argtypes = [c_void_p, POINTER(PROCESSENTRY32W)]
 Process32NextW.rettype = c_int
 
 
+CloseHandle = windll.kernel32.CloseHandle
+
+
 # see also: https://docs.rs/tasklist/latest/src/tasklist/lib.rs.html#77
 def GetProcessByName(name: str):
     hProcessSnap = c_void_p(0)
@@ -81,8 +84,11 @@ def GetProcessByName(name: str):
         x = pe32.szExeFile
 
         if x == name:
-            return True
+            ret = True
+            break
 
         ret = Process32NextW(hProcessSnap, pointer(pe32))
 
-    return False
+    ret = False
+    CloseHandle(hProcessSnap)
+    return ret
