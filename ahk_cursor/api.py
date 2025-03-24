@@ -79,16 +79,16 @@ def GetProcessByName(name: str):
     pe32 = PROCESSENTRY32W()
     pe32.dwSize = sizeof(PROCESSENTRY32W)
     ret = Process32FirstW(hProcessSnap, pointer(pe32))
+    found = False
     while ret:
         pass
         x = pe32.szExeFile
 
         if x == name:
-            ret = True
+            found = True
             break
 
         ret = Process32NextW(hProcessSnap, pointer(pe32))
 
-    ret = False
     CloseHandle(hProcessSnap)
-    return ret
+    return found

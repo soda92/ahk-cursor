@@ -849,7 +849,7 @@ wheels = [
 
 [[package]]
 name = "soda-ahk-cursor"
-version = "2025.3.8.0"
+version = "2025.3.24.0"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
