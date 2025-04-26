@@ -1,6 +1,6 @@
 [project]
 name = "soda-ahk-cursor"
-version = "2025.3.29.0"
+version = "2025.4.26.0"
 description = "Cursor helper for BURIKO Game Interpreter"
 readme = "README.md"
 requires-python = ">=3.10"
