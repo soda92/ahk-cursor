@@ -9,16 +9,21 @@ CURRENT = Path(__file__).resolve().parent
 def move_cursor():
     x, y = pyautogui.position()
     for i in range(5):
-        pyautogui.moveTo(x + 1, y, 0.1)
+        try:
+            pyautogui.moveTo(x + 1, y, 0.1)
+        except pyautogui.FailSafeException:
+            pass
         time.sleep(0.1)
         x, y = pyautogui.position()
     for i in range(5):
-        pyautogui.moveTo(x - 1, y, 0.1)
+        try:
+            pyautogui.moveTo(x - 1, y, 0.1)
+        except pyautogui.FailSafeException:
+            pass
         time.sleep(0.1)
         x, y = pyautogui.position()
 
 
-CURRENT.joinpath("running").write_text("a", encoding="utf8")
 
 
 def move_cursor_impl():

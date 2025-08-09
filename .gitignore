@@ -2,6 +2,7 @@
 /ahk_cursor_script
 # log file
 /*.log
+*.lock
 
 # other
 *ico~

@@ -15,6 +15,17 @@
             }
         },
         {
+            "name": "StartNoMP",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/ahk_cursor/main.py",
+            "console": "integratedTerminal",
+            "args": ["--no-mp", "-e", "SiglusEngine_SteamEn.exe"],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
             "name": "Stop",
             "type": "debugpy",
             "request": "launch",

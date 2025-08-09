@@ -4,7 +4,7 @@ from ahk_cursor.autostart import create
 
 
 def launcher():
-    # gen()
+    gen()
     # os.startfile(CURRENT.joinpath("stop.ahk"))
     create(script)
     os.startfile(str(script))

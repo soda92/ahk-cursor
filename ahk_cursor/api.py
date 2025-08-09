@@ -84,7 +84,7 @@ def GetProcessByName(name: str):
         pass
         x = pe32.szExeFile
 
-        if x == name:
+        if x.lower() == name.lower():
             found = True
             break
 
