@@ -5,13 +5,9 @@ description = "Cursor helper for BURIKO Game Interpreter"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "fastapi>=0.115.6",
     "pyautogui",
-    "pydantic>=2.10.4",
     "pyinstaller>=6.15.0",
     "pywin32>=308",
-    "requests>=2.32.3",
-    "uvicorn>=0.34.0",
 ]
 
 [dependency-groups]
@@ -40,4 +36,4 @@ exclude = ["__pycache__", "*.pyc"]
 soda-ahk-cursor = "ahk_cursor.launcher:launcher"
 soda-ahk-cursor-stop = "ahk_cursor.stop:stop"
 # launched in AHK
-ahk-cursor-l = "ahk_cursor.main:main"
+cursor_checker = "ahk_cursor.main:main"

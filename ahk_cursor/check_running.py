@@ -1,4 +1,4 @@
-from ahk_cursor.api import GetProcessByName
+from ahk_cursor.c_api import GetProcessByName
 from ahk_cursor.logger import logger
 
 
