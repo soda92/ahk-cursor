@@ -5,6 +5,7 @@ TraySetIcon "{resources}\mouse.ico"
 
 global targetExe := ""
 global ini := A_ScriptDir "\Cursor.ini"
+global moving := false  ; 控制光标移动的全局变量
 
 ; 读取上次保存的目标进程名
 if FileExist(ini)
@@ -22,9 +23,14 @@ for i, arg in A_Args {
     }
 }
 
+; 热键绑定
+Hotkey("^!F1", StartMoving)  ; 按 Ctrl+Alt+F1 启动移动
+Hotkey("^!F2", EndMoving)    ; 按 Ctrl+Alt+F2 停止移动
+
 ; 托盘菜单
 A_TrayMenu.Delete()
-A_TrayMenu.Add("Force jiggle", (*) => Jiggle())
+A_TrayMenu.Add("Start Moving", StartMoving)
+A_TrayMenu.Add("End Moving", EndMoving)
 A_TrayMenu.Add("Set target executable...", SetTarget)
 A_TrayMenu.Add("Edit script", EditSelf)
 A_TrayMenu.Add()
@@ -35,28 +41,43 @@ SetTimer(Watch, 200)
 return
 
 Watch() {
-    global targetExe
-    if (targetExe = "" || ProcessExist(targetExe)) {
-        if (Random(1, 10) = 1) { ; 10% tick 概率抖动，避免过于频繁
-            Jiggle()
-        }
+    global targetExe, moving
+    if (moving) {
+        MovePattern()  ; 如果正在移动，则调用移动模式
+    } else if (targetExe = "" || ProcessExist(targetExe)) {
+        ; if (Random(1, 10) = 1) { ; 10% tick 概率抖动，避免过于频繁
+            MovePattern()
+        ; }
     }
 }
 
-Jiggle() {
-    dx := Random(-2, 2)
-    dy := Random(-2, 2)
-    if (dx = 0 && dy = 0)
-        dx := 1
-    MouseMove dx, dy, 0, "R"
-    Sleep 20
-    MouseMove -dx, -dy, 0, "R"
+MovePattern() {
+    ; Move right 5 times, 1 pixel each time with 0.1s sleep
+    Loop 5 {
+        MouseMove 1, 0, 0, "R"
+        Sleep 100
+    }
+    ; Move left 5 times, 1 pixel each time with 0.1s sleep
+    Loop 5 {
+        MouseMove -1, 0, 0, "R"
+        Sleep 100
+    }
+}
+
+StartMoving(*) {
+    global moving
+    moving := true
+}
+
+EndMoving(*) {
+    global moving
+    moving := false
 }
 
 SetTarget(*) {
     global targetExe, ini
     ib := InputBox(
-        "Enter target executable name (e.g. game.exe). Leave blank to always jiggle.",
+        "Enter target executable name (e.g. game.exe). Leave blank to always move.",
         "Set Executable", "w320 h150", targetExe
     )
     if (ib.Result = "OK") {
