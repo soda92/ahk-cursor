@@ -1,7 +1,7 @@
 [project]
 name = "soda-ahk-cursor"
 version = "2025.4.26.0"
-description = "Cursor helper for BURIKO Game Interpreter"
+description = "Cursor helper"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
@@ -32,7 +32,6 @@ exclude = ["__pycache__", "*.pyc"]
 
 
 [project.scripts]
-# main cli use
-soda-ahk-cursor = "ahk_cursor.launcher:launcher"
-# launched in AHK
-cursor_checker = "ahk_cursor.main:main"
+ahk-cursor = "ahk_cursor.main:main"
+ahk_cursor = "ahk_cursor.main:main"
+soda-ahk-cursor = "ahk_cursor.main:main"
