@@ -12,7 +12,7 @@ ExitPreviousSession(ExitReason, ExitCode) {
 }
 
 ExitPreviousSession(0, 0)
-Run "ahk-cursor-l.exe --no-mp -e SiglusEngine_SteamEn.exe", , "Hide", &id
+Run "cursor_checker.exe -e SiglusEngine_SteamEn.exe", , "Hide", &id
 
 Persistent
 OnExit ExitPreviousSession

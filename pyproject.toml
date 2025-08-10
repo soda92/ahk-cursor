@@ -34,6 +34,5 @@ exclude = ["__pycache__", "*.pyc"]
 [project.scripts]
 # main cli use
 soda-ahk-cursor = "ahk_cursor.launcher:launcher"
-soda-ahk-cursor-stop = "ahk_cursor.stop:stop"
 # launched in AHK
 cursor_checker = "ahk_cursor.main:main"
